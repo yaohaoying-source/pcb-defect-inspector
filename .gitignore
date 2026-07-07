@@ -1,0 +1,44 @@
+﻿# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.venv/
+venv/
+env/
+
+# Build/package outputs
+build/
+dist/
+*.spec
+*.exe
+*.tar.gz
+*.zip
+
+# Runtime outputs
+logs/
+screenshots/
+detect_results/
+outputs/*
+!outputs/.gitkeep
+ui/_camera_upload.jpg
+*.log
+
+# Models and datasets
+*.rknn
+*.rkllm
+*.onnx
+*.pt
+*.pth
+*.engine
+*.bin
+models/*
+!models/.gitkeep
+
+# Local config / IDE
+.env
+.env.*
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
