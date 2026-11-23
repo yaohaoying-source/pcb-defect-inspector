@@ -1,6 +1,8 @@
 ﻿"""
 配置管理模块 - 使用 QSettings 持久化应用配置
 """
+from pathlib import Path
+
 from PyQt5.QtCore import QSettings
 
 
@@ -14,6 +16,33 @@ class AppConfig:
     def _settings(cls) -> QSettings:
         return QSettings(cls._ORG_NAME, cls._APP_NAME)
 
+    @classmethod
+    def import_legacy_settings(cls) -> int:
+        """Import missing board settings only after the user requests it."""
+        old = QSettings("YOLODetect", "YOLO-COCO-Detect")
+        current = cls._settings()
+        imported = 0
+        for key in old.allKeys():
+            if not current.contains(key):
+                current.setValue(key, old.value(key))
+                imported += 1
+        current.sync()
+        if current.status() != QSettings.NoError:
+            raise OSError("无法写入本机设置")
+        return imported
+
+    @staticmethod
+    def default_model_dir() -> str:
+        return str(Path(__file__).resolve().parents[1] / "models")
+
+    @staticmethod
+    def _port_or_default(value, default: int) -> int:
+        try:
+            port = int(value)
+        except (TypeError, ValueError):
+            return default
+        return port if 1 <= port <= 65535 else default
+
     # ---- 服务器配置 ----
     @classmethod
     def get_server_host(cls) -> str:
@@ -26,7 +55,7 @@ class AppConfig:
     @classmethod
     def get_server_port(cls) -> int:
         val = cls._settings().value("server/port", "12345")
-        return int(val) if val else 12345
+        return cls._port_or_default(val, 12345)
 
     @classmethod
     def set_server_port(cls, port: int):
@@ -35,7 +64,7 @@ class AppConfig:
     @classmethod
     def get_server_web_port(cls) -> int:
         val = cls._settings().value("server/web_port", "5000")
-        return int(val) if val else 5000
+        return cls._port_or_default(val, 5000)
 
     @classmethod
     def set_server_web_port(cls, port: int):
@@ -43,7 +72,7 @@ class AppConfig:
 
     @classmethod
     def get_model_download_dir(cls) -> str:
-        return cls._settings().value("model/download_dir", "/userdata/Model")
+        return cls._settings().value("model/download_dir", cls.default_model_dir())
 
     @classmethod
     def set_model_download_dir(cls, path: str):
@@ -96,9 +125,7 @@ class AppConfig:
     # ---- Qwen3-VL 本地配置 ----
     @classmethod
     def get_qwen_vl_dir(cls) -> str:
-        return cls._settings().value(
-            "qwen_vl/demo_dir", "/userdata/openclaw/qwen3vl_demo"
-        )
+        return cls._settings().value("qwen_vl/demo_dir", "")
 
     @classmethod
     def set_qwen_vl_dir(cls, path: str):

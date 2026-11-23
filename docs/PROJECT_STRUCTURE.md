@@ -3,8 +3,16 @@
 ```text
 pcb-defect-inspector-open-source/
   README.md
+  requirements.txt
   .gitignore
+  board_monitor/               # C / X11 独立监控
+  scripts/                     # PCB 批测、上传、摄像头检查及参考原型
+  deploy/                      # 便携启动、桌面项、背光与相机说明
   docs/
+    assets/                    # 板端实际图片示例
+    benchmarks/                # 脱敏聚合数据
+    MODEL_WEIGHTS.md
+    MERGE_NOTES.md
     PROJECT_STRUCTURE.md
   pcb_defect_inspector/
     main.py

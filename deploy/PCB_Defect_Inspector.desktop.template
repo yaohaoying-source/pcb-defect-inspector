@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=PCB Defect Inspector
+Comment=RKNN PCB defect detection
+Path=__REPO_ROOT__/pcb_defect_inspector
+Exec=bash "__REPO_ROOT__/deploy/start_pcb_inspector.sh"
+Icon=__REPO_ROOT__/pcb_defect_inspector/assets/pcb_defect_icon.png
+Terminal=false
+Categories=Development;Graphics;

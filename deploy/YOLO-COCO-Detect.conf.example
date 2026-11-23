@@ -1,0 +1,16 @@
+[deepseek]
+api_key = YOUR_API_KEY_HERE
+model = deepseek-chat
+
+[detection]
+confidence = 0.25
+iou = 0.45
+last_model =
+
+[model]
+download_dir = models
+
+[server]
+host = 127.0.0.1
+port = YOUR_TCP_PORT_HERE
+web_port = YOUR_HTTP_PORT_HERE

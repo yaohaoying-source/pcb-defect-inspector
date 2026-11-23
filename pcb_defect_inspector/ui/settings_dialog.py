@@ -5,7 +5,7 @@ from PyQt5.QtWidgets import (
     QDialog, QVBoxLayout, QHBoxLayout, QFormLayout,
     QGroupBox, QLabel, QLineEdit, QSpinBox,
     QDoubleSpinBox, QComboBox, QPushButton,
-    QDialogButtonBox
+    QDialogButtonBox, QMessageBox
 )
 from PyQt5.QtCore import Qt
 
@@ -41,7 +41,7 @@ class SettingsDialog(QDialog):
         server_layout.addRow("模型下载端口:", self.web_port_spin)
 
         self.model_dir_edit = QLineEdit()
-        self.model_dir_edit.setPlaceholderText("/userdata/Model")
+        self.model_dir_edit.setPlaceholderText(AppConfig.default_model_dir())
         server_layout.addRow("模型保存目录:", self.model_dir_edit)
         layout.addWidget(server_group)
 
@@ -50,7 +50,7 @@ class SettingsDialog(QDialog):
         ds_layout = QFormLayout(deepseek_group)
         self.api_key_edit = QLineEdit()
         self.api_key_edit.setEchoMode(QLineEdit.Password)
-        self.api_key_edit.setPlaceholderText("sk-...")
+        self.api_key_edit.setPlaceholderText("填写个人 API Key")
         ds_layout.addRow("API Key:", self.api_key_edit)
 
         self.model_combo = QComboBox()
@@ -74,6 +74,11 @@ class SettingsDialog(QDialog):
         self.iou_spin.setDecimals(2)
         detect_layout.addRow("IOU 阈值:", self.iou_spin)
         layout.addWidget(detect_group)
+
+        # ---- 恢复板端旧版设置 ----
+        import_button = QPushButton("导入旧版板端设置")
+        import_button.clicked.connect(self._import_legacy_settings)
+        layout.addWidget(import_button)
 
         # ---- 按钮 ----
         buttons = QDialogButtonBox(
@@ -99,12 +104,28 @@ class SettingsDialog(QDialog):
         self.conf_spin.setValue(AppConfig.get_confidence())
         self.iou_spin.setValue(AppConfig.get_iou())
 
+    def _import_legacy_settings(self):
+        answer = QMessageBox.question(
+            self, "导入旧版设置",
+            "从本机旧版板端配置导入尚未设置的项目？可能包含服务器地址和密钥。",
+            QMessageBox.Yes | QMessageBox.No, QMessageBox.No,
+        )
+        if answer != QMessageBox.Yes:
+            return
+        try:
+            count = AppConfig.import_legacy_settings()
+        except OSError as exc:
+            QMessageBox.warning(self, "导入失败", str(exc))
+            return
+        self._load_settings()
+        QMessageBox.information(self, "导入完成", f"导入了 {count} 项设置。")
+
     def _save_settings(self):
         """保存配置"""
         AppConfig.set_server_host(self.host_edit.text().strip())
         AppConfig.set_server_port(self.port_spin.value())
         AppConfig.set_server_web_port(self.web_port_spin.value())
-        AppConfig.set_model_download_dir(self.model_dir_edit.text().strip() or "/userdata/Model")
+        AppConfig.set_model_download_dir(self.model_dir_edit.text().strip() or AppConfig.default_model_dir())
         AppConfig.set_deepseek_api_key(self.api_key_edit.text().strip())
         AppConfig.set_deepseek_model(self.model_combo.currentText())
         AppConfig.set_confidence(self.conf_spin.value())

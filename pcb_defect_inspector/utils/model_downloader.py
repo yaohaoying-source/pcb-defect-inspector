@@ -5,6 +5,7 @@ import json
 import os
 import urllib.parse
 import urllib.request
+from pathlib import Path
 
 
 def safe_model_filename(filename):
@@ -34,11 +35,13 @@ def list_remote_models(host, web_port=5000, timeout=10):
 def download_remote_model(
     host,
     filename,
-    target_dir="/userdata/Model",
+    target_dir=None,
     web_port=5000,
     timeout=300,
     progress_callback=None,
 ):
+    if target_dir is None:
+        target_dir = str(Path(__file__).resolve().parents[1] / "models")
     name = safe_model_filename(filename)
     os.makedirs(target_dir, exist_ok=True)
     target_path = os.path.join(target_dir, name)

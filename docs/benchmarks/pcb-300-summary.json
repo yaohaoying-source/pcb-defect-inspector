@@ -1,0 +1,138 @@
+{
+  "confidence": 0.25,
+  "iou": 0.45,
+  "image_count": 300,
+  "valid_image_count": 300,
+  "load_model_ms": 360.484,
+  "total_wall_s": 41.776,
+  "throughput_images_per_s": 7.181,
+  "class_hit_count": 262,
+  "class_hit_rate": 0.8733,
+  "top1_hit_count": 245,
+  "top1_hit_rate": 0.8167,
+  "no_detection_count": 18,
+  "per_class": {
+    "missing_hole": {
+      "expected_images": 50,
+      "class_hit": 50,
+      "class_hit_rate": 1.0,
+      "top1_hit": 50,
+      "top1_hit_rate": 1.0
+    },
+    "mouse_bite": {
+      "expected_images": 50,
+      "class_hit": 43,
+      "class_hit_rate": 0.86,
+      "top1_hit": 38,
+      "top1_hit_rate": 0.76
+    },
+    "open_circuit": {
+      "expected_images": 50,
+      "class_hit": 46,
+      "class_hit_rate": 0.92,
+      "top1_hit": 42,
+      "top1_hit_rate": 0.84
+    },
+    "short_circuit": {
+      "expected_images": 50,
+      "class_hit": 48,
+      "class_hit_rate": 0.96,
+      "top1_hit": 44,
+      "top1_hit_rate": 0.88
+    },
+    "spur": {
+      "expected_images": 50,
+      "class_hit": 37,
+      "class_hit_rate": 0.74,
+      "top1_hit": 35,
+      "top1_hit_rate": 0.7
+    },
+    "spurious_copper": {
+      "expected_images": 50,
+      "class_hit": 38,
+      "class_hit_rate": 0.76,
+      "top1_hit": 36,
+      "top1_hit_rate": 0.72
+    }
+  },
+  "timing_summary": {
+    "read_ms": {
+      "avg": 50.431,
+      "p50": 53.514,
+      "p95": 81.719,
+      "p99": 95.802,
+      "max": 106.606
+    },
+    "rgb_convert_ms": {
+      "avg": 4.08,
+      "p50": 3.77,
+      "p95": 7.511,
+      "p99": 10.015,
+      "max": 12.537
+    },
+    "preprocess_ms": {
+      "avg": 1.135,
+      "p50": 1.059,
+      "p95": 1.795,
+      "p99": 2.009,
+      "max": 4.093
+    },
+    "infer_ms": {
+      "avg": 30.3,
+      "p50": 31.261,
+      "p95": 36.121,
+      "p99": 38.645,
+      "max": 49.985
+    },
+    "postprocess_ms": {
+      "avg": 1.288,
+      "p50": 1.288,
+      "p95": 1.682,
+      "p99": 2.062,
+      "max": 4.634
+    },
+    "detect_no_draw_ms": {
+      "avg": 32.79,
+      "p50": 33.802,
+      "p95": 39.046,
+      "p99": 41.513,
+      "max": 52.24
+    },
+    "draw_save_ms": {
+      "avg": 51.76,
+      "p50": 55.376,
+      "p95": 78.696,
+      "p99": 89.774,
+      "max": 98.074
+    },
+    "total_ms": {
+      "avg": 139.061,
+      "p50": 146.725,
+      "p95": 197.905,
+      "p99": 215.817,
+      "max": 245.938
+    }
+  },
+  "upload_count": 30,
+  "upload_success_count": 0,
+  "monitor": {
+    "sample_count": 23,
+    "sample_interval_seconds": 2.0,
+    "process_rss_mb_sampled_max": 294.0,
+    "load1_sampled_max": 2.021,
+    "available_memory_mb_sampled_min": 2141.6
+  },
+  "http_upload": {
+    "count": 30,
+    "success_count": 0
+  },
+  "tcp_upload": {
+    "count": 30,
+    "success_count": 30
+  },
+  "dataset_split": {
+    "val": 28,
+    "train": 242,
+    "test": 30
+  }
+}

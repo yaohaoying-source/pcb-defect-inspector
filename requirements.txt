@@ -1,0 +1,9 @@
+# Python 3.10.12 on the inspected ELF 2 system.
+numpy==1.26.4
+Pillow==9.0.1
+# The backup used 2.25.1, while the original project requested >=2.28.
+# This newer range needs a board-side HTTP/TCP integration check.
+requests>=2.28,<3
+# Board baseline: PyQt5==5.15.6 and opencv-python==4.11.0.86.
+# Prefer the board image's PyQt5/OpenCV when camera/GStreamer integration is required.
+# Install the vendor's AArch64 CPython 3.10 rknn-toolkit-lite2==2.3.2 wheel separately.
